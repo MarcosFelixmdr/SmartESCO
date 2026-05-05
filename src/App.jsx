@@ -4,6 +4,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./Home";
 import Servicos from "./Servicos";
 import Projetos from "./Projetos";
+import ProjetoDetalhes from "./ProjetoDetalhes";
 import Contato from "./Contato";
 import AnaliseConsumo from "./AnaliseConsumo";
 import Navbar from "./components/Navbar";
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/servicos" element={<Servicos />} />
             <Route path="/projetos" element={<Projetos />} />
+            <Route path="/projetos/:id" element={<ProjetoDetalhes />} />
             <Route path="/contato" element={<Contato />} />
             <Route path="/analise" element={<AnaliseConsumo />} />
           </Routes>

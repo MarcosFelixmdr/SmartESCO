@@ -126,7 +126,7 @@ const AnaliseConsumo = () => {
             </div>
 
             <div className="uc-selector-wrapper">
-              <label style={{ color: '#14213d', display: 'block', fontSize: '0.9rem', marginBottom: '8px', fontWeight: 'bold' }}>Unidade Consumidora (UC):</label>
+              <label style={{ color: '#fff', display: 'block', fontSize: '0.9rem', marginBottom: '8px', fontWeight: 'bold' }}>Unidade Consumidora (UC):</label>
               <select
                 className="uc-selector"
                 value={selectedUc.id}

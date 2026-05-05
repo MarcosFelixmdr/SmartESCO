@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
-const projects = [
+export const projects = [
   {
     id: 1,
     title: "Monitoramento Smart Grid",
@@ -51,16 +51,19 @@ const Projetos = () => {
           >
             {projects.map((project) => (
               <div key={project.id} className="carousel-item">
-                <div className="carousel-card">
-                  <div 
-                    className="carousel-image" 
-                    style={{ backgroundImage: `url(${project.image})` }}
-                  ></div>
-                  <div className="carousel-content">
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
+                <Link to={`/projetos/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <div className="carousel-card" style={{ cursor: 'pointer' }}>
+                    <div 
+                      className="carousel-image" 
+                      style={{ backgroundImage: `url(${project.image})` }}
+                    ></div>
+                    <div className="carousel-content">
+                      <h3>{project.title}</h3>
+                      <p>{project.description}</p>
+                      <span style={{ color: 'var(--color-primary)', fontWeight: 'bold', display: 'inline-block', marginTop: '10px' }}>Ver detalhes completas &rarr;</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>
@@ -85,7 +88,7 @@ const Projetos = () => {
         </div>
       </section>
 
-      <section className="section container" style={{ textAlign: 'center', backgroundColor: '#e3f2fd', borderRadius: '30px', marginBottom: '100px' }}>
+      <section className="section container" style={{ textAlign: 'center', backgroundColor: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)', borderRadius: '30px', marginBottom: '100px', marginTop: '-150px' }}>
         <h2 style={{ marginBottom: '20px' }}>Tem um projeto em mente?</h2>
         <p style={{ marginBottom: '30px', maxWidth: '600px', margin: '0 auto 30px' }}>
           Unimos hardware e software para tirar sua ideia do papel. Vamos conversar sobre como podemos ajudar sua empresa.
