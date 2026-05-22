@@ -1,7 +1,10 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar = () => {
+  const { language, toggleLanguage, t } = useLanguage();
+
   return (
     <header className="header" style={{ padding: '0 40px' }}>
       <div className="logo">
@@ -13,14 +16,14 @@ const Navbar = () => {
           />
         </Link>
       </div>
-      <nav>
+      <nav style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
         <ul className="nav-list">
           <li>
             <NavLink
               to="/"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
-              Início
+              {t('nav_inicio')}
             </NavLink>
           </li>
           <li>
@@ -28,7 +31,7 @@ const Navbar = () => {
               to="/servicos"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
-              Serviços
+              {t('nav_servicos')}
             </NavLink>
           </li>
           <li>
@@ -36,7 +39,7 @@ const Navbar = () => {
               to="/projetos"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
-              Projetos
+              {t('nav_projetos')}
             </NavLink>
           </li>
           <li>
@@ -44,7 +47,7 @@ const Navbar = () => {
               to="/analise"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
-              Painel de Análise
+              {t('nav_analise')}
             </NavLink>
           </li>
           <li>
@@ -52,10 +55,17 @@ const Navbar = () => {
               to="/contato"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
             >
-              Contato
+              {t('nav_contato')}
             </NavLink>
           </li>
         </ul>
+        <button 
+          className="lang-toggle-btn" 
+          onClick={toggleLanguage}
+          aria-label="Alterar idioma / Switch language"
+        >
+          {language === 'PT' ? 'PTBR' : 'EN'}
+        </button>
       </nav>
     </header>
   );

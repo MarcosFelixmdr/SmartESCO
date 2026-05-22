@@ -56,37 +56,45 @@ export function detectPeaks(data, threshold = 1.5) {
  * - Sazonal: CV entre 15% e 35%
  * - Irregular: CV > 35%
  * @param {number[]} data - Array de valores de consumo (kWh)
+ * @param {string} lang - Idioma ativo ('PT' ou 'EN')
  * @returns {{ perfil: string, cv: number, descricao: string }}
  */
-export function classifyProfile(data) {
+export function classifyProfile(data, lang = 'PT') {
   const { media, desvioPadrao } = calculateMetrics(data);
 
   if (media === 0) {
-    return { perfil: 'Sem dados', cv: 0, descricao: 'Dados insuficientes para análise.' };
+    return {
+      perfil: lang === 'PT' ? 'Sem dados' : 'No data',
+      cv: 0,
+      descricao: lang === 'PT' ? 'Dados insuficientes para análise.' : 'Insufficient data for analysis.'
+    };
   }
 
   const cv = (desvioPadrao / media) * 100; // Coeficiente de Variação (%)
 
   if (cv < 15) {
     return {
-      perfil: 'Estável',
+      perfil: lang === 'PT' ? 'Estável' : 'Stable',
       cv: Math.round(cv * 100) / 100,
-      descricao:
-        'O consumo desta UC é bastante estável ao longo do período analisado, com poucas variações significativas. Isso indica um padrão previsível, ideal para planejamento de eficiência energética.',
+      descricao: lang === 'PT'
+        ? 'O consumo desta UC é bastante estável ao longo do período analisado, com poucas variações significativas. Isso indica um padrão previsível, ideal para planejamento de eficiência energética.'
+        : 'The consumption of this CU is quite stable over the analyzed period, with few significant variations. This indicates a predictable pattern, ideal for energy efficiency planning.',
     };
   } else if (cv < 35) {
     return {
-      perfil: 'Sazonal',
+      perfil: lang === 'PT' ? 'Sazonal' : 'Seasonal',
       cv: Math.round(cv * 100) / 100,
-      descricao:
-        'O consumo apresenta variações sazonais moderadas, possivelmente ligadas a mudanças climáticas ou ciclos operacionais. Recomenda-se análise para identificar padrões de sazonalidade.',
+      descricao: lang === 'PT'
+        ? 'O consumo apresenta variações sazonais moderadas, possivelmente ligadas a mudanças climáticas ou ciclos operacionais. Recomenda-se análise para identificar padrões de sazonalidade.'
+        : 'The consumption presents moderate seasonal variations, possibly linked to climate changes or operational cycles. Analysis is recommended to identify seasonal patterns.',
     };
   } else {
     return {
-      perfil: 'Irregular',
+      perfil: lang === 'PT' ? 'Irregular' : 'Irregular',
       cv: Math.round(cv * 100) / 100,
-      descricao:
-        'O consumo desta UC é altamente irregular, com grandes flutuações entre períodos. Isso pode indicar equipamentos com uso intermitente ou problemas na rede elétrica.',
+      descricao: lang === 'PT'
+        ? 'O consumo desta UC é altamente irregular, com grandes flutuações entre períodos. Isso pode indicar equipamentos com uso intermitente ou problemas na rede elétrica.'
+        : 'The consumption of this CU is highly irregular, with large fluctuations between periods. This may indicate intermittent equipment use or issues in the electrical grid.',
     };
   }
 }
@@ -94,9 +102,10 @@ export function classifyProfile(data) {
 /**
  * Calcula o custo estimado sob diferentes regimes tarifários.
  * @param {Array<{label: string, consumo: number, isWeekend: boolean, hour?: number}>} data - Dados horários
+ * @param {string} lang - Idioma ativo ('PT' ou 'EN')
  * @returns {{ convencional: number, branca: number, economia: number, melhor: string }}
  */
-export function simulateTariffCosts(data) {
+export function simulateTariffCosts(data, lang = 'PT') {
   // Tarifas médias estimadas (R$/kWh)
   const TARIFA_CONVENCIONAL = 0.72;
   const TARIFA_BRANCA_PONTA = 1.35;
@@ -130,7 +139,9 @@ export function simulateTariffCosts(data) {
     convencional: Math.round(totalConvencional * 100) / 100,
     branca: Math.round(totalBranca * 100) / 100,
     economia: Math.round(economia * 100) / 100,
-    melhor: economia > 0 ? 'Tarifa Branca' : 'Tarifa Convencional',
+    melhor: economia > 0
+      ? (lang === 'PT' ? 'Tarifa Branca' : 'White Tariff')
+      : (lang === 'PT' ? 'Tarifa Convencional' : 'Conventional Tariff'),
     percentualEconomia: Math.round((economia / totalConvencional) * 10000) / 100
   };
 }
@@ -153,15 +164,36 @@ export function calculateEfficiencyIndicators(values) {
 /**
  * Gera dados simulados de repartição por carga.
  * @param {number} consumoTotal - Consumo total da UC no período
+ * @param {string} lang - Idioma ativo ('PT' ou 'EN')
  * @returns {Array<{name: string, value: number, color: string}>}
  */
-export function generateLoadData(consumoTotal) {
+export function generateLoadData(consumoTotal, lang = 'PT') {
   const loads = [
-    { name: 'Processos Industriais', ratio: 0.45, color: '#2563eb' },
-    { name: 'Ar Condicionado', ratio: 0.25, color: '#3b82f6' },
-    { name: 'Iluminação', ratio: 0.15, color: '#60a5fa' },
-    { name: 'TI / Servidores', ratio: 0.10, color: '#93c5fd' },
-    { name: 'Outras Cargas', ratio: 0.05, color: '#bfdbfe' },
+    { 
+      name: lang === 'PT' ? 'Processos Industriais' : 'Industrial Processes', 
+      ratio: 0.45, 
+      color: '#2563eb' 
+    },
+    { 
+      name: lang === 'PT' ? 'Ar Condicionado' : 'Air Conditioning', 
+      ratio: 0.25, 
+      color: '#3b82f6' 
+    },
+    { 
+      name: lang === 'PT' ? 'Iluminação' : 'Lighting', 
+      ratio: 0.15, 
+      color: '#60a5fa' 
+    },
+    { 
+      name: lang === 'PT' ? 'TI / Servidores' : 'IT / Servers', 
+      ratio: 0.10, 
+      color: '#93c5fd' 
+    },
+    { 
+      name: lang === 'PT' ? 'Outras Cargas' : 'Other Loads', 
+      ratio: 0.05, 
+      color: '#bfdbfe' 
+    },
   ];
 
   return loads.map(load => ({
@@ -209,7 +241,6 @@ export function generateForecast(history, weeks = 4) {
   const tendencia = (lastConsumos[lastConsumos.length - 1] - lastConsumos[0]) / lastConsumos.length;
   
   const forecast = [];
-  const startMonth = 1; // Simulação começando em "Semana 1"
   
   for (let i = 1; i <= weeks; i++) {
     // Adiciona ruído aleatório e componente de tendência
@@ -315,16 +346,20 @@ export function generateMockData(ucId = 'UC-001', tipo = 'sazonal') {
  * Gera alertas sistêmicos combinando diversos indicadores.
  * @returns {Array<{id: string, level: string, title: string, message: string, suggestion: string}>}
  */
-export function generateAlerts({ metrics, efficiency, peaks, forecastData }) {
+export function generateAlerts({ metrics, efficiency, peaks, forecastData }, lang = 'PT') {
   const alerts = [];
 
   if (efficiency.fatorCarga < 0.5 && efficiency.fatorCarga > 0) {
     alerts.push({
       id: 'alert-fc',
       level: 'critical',
-      title: 'Fator de Carga Crítico',
-      message: `Fator de carga de ${efficiency.fatorCarga} indica forte ociosidade da rede ou picos excessivos.`,
-      suggestion: 'Remaneje o acionamento de máquinas pesadas (ex: fornos, compressores) para horários distantes do pico de demanda.'
+      title: lang === 'PT' ? 'Fator de Carga Crítico' : 'Critical Load Factor',
+      message: lang === 'PT'
+        ? `Fator de carga de ${efficiency.fatorCarga} indica forte ociosidade da rede ou picos excessivos.`
+        : `Load factor of ${efficiency.fatorCarga} indicates strong network idleness or excessive peaks.`,
+      suggestion: lang === 'PT'
+        ? 'Remaneje o acionamento de máquinas pesadas (ex: fornos, compressores) para horários distantes do pico de demanda.'
+        : 'Reschedule the activation of heavy machinery (e.g. ovens, compressors) to times away from peak demand.'
     });
   }
 
@@ -332,9 +367,13 @@ export function generateAlerts({ metrics, efficiency, peaks, forecastData }) {
     alerts.push({
       id: 'alert-peaks',
       level: 'warning',
-      title: 'Consumo Volátil',
-      message: `Foram detectados ${peaks.length} picos anormais que distorcem sua média.`,
-      suggestion: 'Investigue se equipamentos foram deixados ligados nos finais de semana ou fora de turno.'
+      title: lang === 'PT' ? 'Consumo Volátil' : 'Volatile Consumption',
+      message: lang === 'PT'
+        ? `Foram detectados ${peaks.length} picos anormais que distorcem sua média.`
+        : `${peaks.length} abnormal peaks that distort your average were detected.`,
+      suggestion: lang === 'PT'
+        ? 'Investigue se equipamentos foram deixados ligados nos finais de semana ou fora de turno.'
+        : 'Investigate if equipment was left running on weekends or outside normal shifts.'
     });
   }
 
@@ -343,9 +382,13 @@ export function generateAlerts({ metrics, efficiency, peaks, forecastData }) {
     alerts.push({
       id: 'alert-forecast',
       level: 'warning',
-      title: 'Risco de Novo Pico Previsto',
-      message: 'O modelo de IA prevê um consumo próximo ao seu histórico máximo nas próximas semanas.',
-      suggestion: 'Redobre o monitoramento preventivo de equipamentos de alta potência.'
+      title: lang === 'PT' ? 'Risco de Novo Pico Previsto' : 'Predicted New Peak Risk',
+      message: lang === 'PT'
+        ? 'O modelo de IA prevê um consumo próximo ao seu histórico máximo nas próximas semanas.'
+        : 'The AI model predicts consumption close to your historic maximum in the coming weeks.',
+      suggestion: lang === 'PT'
+        ? 'Redobre o monitoramento preventivo de equipamentos de alta potência.'
+        : 'Redouble preventive monitoring of high-power equipment.'
     });
   }
 
@@ -355,15 +398,17 @@ export function generateAlerts({ metrics, efficiency, peaks, forecastData }) {
 /**
  * Gera insights acionáveis de inteligência de negócios.
  */
-export function generateInsights({ tariffCosts, loadData, profile }) {
+export function generateInsights({ tariffCosts, loadData, profile }, lang = 'PT') {
   const insights = [];
 
-  if (tariffCosts.melhor === 'Tarifa Branca' && tariffCosts.economia > 0) {
+  if (tariffCosts.economia > 0) {
     insights.push({
       id: 'in-tariff',
-      title: 'Oportunidade Tarifária',
-      message: `Mudar para Tarifa Branca pode gerar até R$ ${tariffCosts.economia} de economia diária (${tariffCosts.percentualEconomia}% a menos).`,
-      action: 'Simular Migração'
+      title: lang === 'PT' ? 'Oportunidade Tarifária' : 'Tariff Opportunity',
+      message: lang === 'PT'
+        ? `Mudar para Tarifa Branca pode gerar até R$ ${tariffCosts.economia} de economia diária (${tariffCosts.percentualEconomia}% a menos).`
+        : `Switching to the White Tariff can generate up to R$ ${tariffCosts.economia} in daily savings (${tariffCosts.percentualEconomia}% less).`,
+      action: lang === 'PT' ? 'Simular Migração' : 'Simulate Migration'
     });
   }
 
@@ -373,28 +418,35 @@ export function generateInsights({ tariffCosts, loadData, profile }) {
     if (topLoadPercent > 35) {
       insights.push({
         id: 'in-load',
-        title: 'Carga Concentrada',
-        message: `Com ${topLoadPercent}% do consumo, "${topLoad.name}" é seu maior ofensor. Focar esforços de eficiência aqui terá impacto massivo.`,
-        action: 'Ver Detalhes do Circuito'
+        title: lang === 'PT' ? 'Carga Concentrada' : 'Concentrated Load',
+        message: lang === 'PT'
+          ? `Com ${topLoadPercent}% do consumo, "${topLoad.name}" é seu maior ofensor. Focar esforços de eficiência aqui terá impacto massivo.`
+          : `With ${topLoadPercent}% of consumption, "${topLoad.name}" is your biggest driver. Focusing efficiency efforts here will have massive impact.`,
+        action: lang === 'PT' ? 'Ver Detalhes do Circuito' : 'View Circuit Details'
       });
     }
   }
 
-  if (profile.perfil === 'Estável') {
+  const stableWord = lang === 'PT' ? 'Estável' : 'Stable';
+  if (profile.perfil === stableWord) {
     insights.push({
       id: 'in-solar',
-      title: 'Perfil Ideal para Energia Solar',
-      message: 'Sua estabilidade de consumo reduz drasticamente erros de dimensionamento em projetos fotovoltaicos, garantindo ROI.',
-      action: 'Calcular Orçamento Solar'
+      title: lang === 'PT' ? 'Perfil Ideal para Energia Solar' : 'Ideal Profile for Solar Energy',
+      message: lang === 'PT'
+        ? 'Sua estabilidade de consumo reduz drasticamente erros de dimensionamento em projetos fotovoltaicos, garantindo ROI.'
+        : 'Your consumption stability drastically reduces sizing errors in photovoltaic projects, ensuring ROI.',
+      action: lang === 'PT' ? 'Calcular Orçamento Solar' : 'Calculate Solar Budget'
     });
   }
 
   if (insights.length === 0) {
     insights.push({
       id: 'in-ok',
-      title: 'Operação Otimizada',
-      message: 'Não identificamos ineficiências graves. Mantenha os equipamentos com manutenção em dia.',
-      action: 'Ver Relatório Completo'
+      title: lang === 'PT' ? 'Operação Otimizada' : 'Optimized Operation',
+      message: lang === 'PT'
+        ? 'Não identificamos ineficiências graves. Mantenha os equipamentos com manutenção em dia.'
+        : 'We did not identify severe inefficiencies. Keep equipment maintenance up to date.',
+      action: lang === 'PT' ? 'Ver Relatório Completo' : 'View Full Report'
     });
   }
 

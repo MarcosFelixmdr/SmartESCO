@@ -1,13 +1,16 @@
 import React from 'react';
+import { useLanguage } from './context/LanguageContext';
 import './styles.css';
 
 const Contato = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="contato-page">
       <section className="hero">
         <div className="container animate-slide">
-          <h1>Contato</h1>
-          <p>Fale conosco para projetos de eletrônica customizada, Edge AI e parcerias acadêmicas.</p>
+          <h1>{t('cont_hero_title')}</h1>
+          <p>{t('cont_hero_desc')}</p>
         </div>
       </section>
 
@@ -16,52 +19,50 @@ const Contato = () => {
 
           <div className="animate-slide">
             <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '40px' }}>
-              Localização e Inovação
+              {t('cont_section_title')}
             </h2>
             <p className="body-text" style={{ marginBottom: '40px' }}>
-              Estamos localizados em Petrópolis, na região serrana do Rio de Janeiro, 
-              um importante polo de inovação e tecnologia. Nossa sede nos permite 
-              desenvolver soluções inteligentes com foco em excelência e agilidade.
+              {t('cont_body_text')}
             </p>
 
             <div className="contact-info-item">
-              <h4>Endereço</h4>
+              <h4>{t('cont_address')}</h4>
               <p>Rua Domingos Silvério, 135, Quitandinha, Petrópolis - RJ, CEP 25650-050</p>
             </div>
 
             <div className="contact-info-item">
-              <h4>Horário de Atendimento</h4>
-              <p>Segunda a Sexta: 08:00 - 18:00</p>
+              <h4>{t('cont_hours')}</h4>
+              <p>{t('cont_hours_desc')}</p>
             </div>
 
             <div className="contact-info-item">
-              <h4>Email e Telefone</h4>
+              <h4>{t('cont_email_tel')}</h4>
               <p>contato@SmartESCO.com.br</p>
               <p>+55 21 99551-9674</p>
             </div>
           </div>
 
           <div className="card animate-slide">
-            <h3 style={{ marginBottom: '30px' }}>Envie uma Mensagem</h3>
+            <h3 style={{ marginBottom: '30px' }}>{t('cont_form_title')}</h3>
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="form-group">
-                <label className="form-label">Seu nome</label>
-                <input type="text" placeholder="Digite seu nome" className="form-input" />
+                <label className="form-label">{t('cont_form_name')}</label>
+                <input type="text" placeholder={t('cont_form_name_ph')} className="form-input" />
               </div>
               <div className="form-group">
-                <label className="form-label">Seu e-mail</label>
-                <input type="email" placeholder="Digite seu e-mail" className="form-input" />
+                <label className="form-label">{t('cont_form_email')}</label>
+                <input type="email" placeholder={t('cont_form_email_ph')} className="form-input" />
               </div>
               <div className="form-group">
-                <label className="form-label">Mensagem</label>
+                <label className="form-label">{t('cont_form_msg')}</label>
                 <textarea 
-                  placeholder="Escreva sua mensagem" 
+                  placeholder={t('cont_form_msg_ph')} 
                   className="form-input" 
                   style={{ minHeight: '150px', resize: 'vertical' }}
                 ></textarea>
               </div>
               <button className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>
-                Enviar Mensagem
+                {t('cont_form_btn')}
               </button>
             </form>
           </div>

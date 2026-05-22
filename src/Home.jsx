@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, ArrowRight, Cpu, Network } from 'lucide-react';
+import { useLanguage } from './context/LanguageContext';
 import './styles.css';
 
 const Home = () => {
+  const { t } = useLanguage();
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -38,19 +41,19 @@ const Home = () => {
               <span className="ping-anim"></span>
               <span className="ping-core"></span>
             </span>
-            <span className="badge-text">Inovação B2B</span>
+            <span className="badge-text">{t('home_badge')}</span>
           </div>
           
           <h1 className="new-hero-title">
-            Soluções Avançadas em Eletrônica e Software para Energia
+            {t('home_hero_title')}
           </h1>
           <p className="new-hero-subtitle">
-            Desenvolvemos infraestrutura inteligente com IoT, Edge AI e Smart Grids para otimizar operações no setor energético e industrial.
+            {t('home_hero_subtitle')}
           </p>
           
-          <Link to="/expertise">
+          <Link to="/servicos">
             <button className="new-hero-btn group">
-              Conheça Nossas Soluções
+              {t('home_hero_btn')}
               <ArrowRight className="btn-icon" size={20} />
             </button>
           </Link>
@@ -64,26 +67,26 @@ const Home = () => {
             
             {/* Left Side: Text and List */}
             <div className="features-text animate-slide">
-              <h2 className="features-title">Transformando dados em eficiência operacional</h2>
-              <p className="features-desc">A SmartESCO atua na interseção entre hardware robusto e software inteligente. Nossa missão é modernizar a infraestrutura de energia através de tecnologias de ponta que garantem confiabilidade, segurança e otimização de recursos.</p>
+              <h2 className="features-title">{t('home_feat_title')}</h2>
+              <p className="features-desc">{t('home_feat_desc')}</p>
               
               <ul className="features-list">
                 <li>
                   <div className="icon-wrapper"><Zap size={14} /></div>
-                  Hardware customizado para ambientes industriais
+                  {t('home_feat_item1')}
                 </li>
                 <li>
                   <div className="icon-wrapper"><Zap size={14} /></div>
-                  Processamento de dados na borda (Edge AI)
+                  {t('home_feat_item2')}
                 </li>
                 <li>
                   <div className="icon-wrapper"><Zap size={14} /></div>
-                  Integração perfeita com sistemas legados
+                  {t('home_feat_item3')}
                 </li>
               </ul>
               
               <Link to="/projetos" className="features-link group">
-                Ver nossos projetos <ArrowRight size={16} className="btn-icon" />
+                {t('home_feat_link')} <ArrowRight size={16} className="btn-icon" />
               </Link>
             </div>
 
@@ -92,24 +95,24 @@ const Home = () => {
               <div className="cards-col mt-offset">
                 <div className="feature-card dark-card">
                   <Cpu size={40} className="card-icon" />
-                  <h3>Hardware</h3>
-                  <p>Desenvolvimento de placas e sensores industriais.</p>
+                  <h3>{t('home_card_hw')}</h3>
+                  <p>{t('home_card_hw_desc')}</p>
                 </div>
                 <div className="feature-card primary-card">
                   <Network size={40} className="card-icon-light" />
-                  <h3>IoT & Edge</h3>
-                  <p>Redes distribuídas e inteligência local.</p>
+                  <h3>{t('home_card_iot')}</h3>
+                  <p>{t('home_card_iot_desc')}</p>
                 </div>
               </div>
               <div className="cards-col">
                 <div className="feature-card secondary-card">
                   <Zap size={40} className="card-icon" />
-                  <h3>Smart Grids</h3>
-                  <p>Gestão avançada de distribuição de energia.</p>
+                  <h3>{t('home_card_sg')}</h3>
+                  <p>{t('home_card_sg_desc')}</p>
                 </div>
                 <div className="feature-card stat-card">
                   <h3>10+</h3>
-                  <p>Anos de pesquisa e inovação aplicada.</p>
+                  <p>{t('home_card_stat')}</p>
                 </div>
               </div>
             </div>

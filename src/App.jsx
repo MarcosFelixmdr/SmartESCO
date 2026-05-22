@@ -9,29 +9,32 @@ import Contato from "./Contato";
 import AnaliseConsumo from "./AnaliseConsumo";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { LanguageProvider } from "./context/LanguageContext";
 import "./styles.css";
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="App">
-        <Navbar />
-        
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/servicos" element={<Servicos />} />
-            <Route path="/projetos" element={<Projetos />} />
-            <Route path="/projetos/:id" element={<ProjetoDetalhes />} />
-            <Route path="/contato" element={<Contato />} />
-            <Route path="/analise" element={<AnaliseConsumo />} />
-          </Routes>
-        </main>
+    <LanguageProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="App">
+          <Navbar />
+          
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/servicos" element={<Servicos />} />
+              <Route path="/projetos" element={<Projetos />} />
+              <Route path="/projetos/:id" element={<ProjetoDetalhes />} />
+              <Route path="/contato" element={<Contato />} />
+              <Route path="/analise" element={<AnaliseConsumo />} />
+            </Routes>
+          </main>
 
-        <Footer />
-      </div>
-    </Router>
+          <Footer />
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
 

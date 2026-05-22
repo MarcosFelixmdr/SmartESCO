@@ -1,13 +1,16 @@
 import React from 'react';
+import { useLanguage } from './context/LanguageContext';
 import './styles.css';
 
 const Servicos = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="servicos-page">
       <section className="hero">
         <div className="container animate-slide">
-          <h1>Nossos Serviços</h1>
-          <p>Desenvolvemos soluções em eletrônica e software para setores críticos.</p>
+          <h1>{t('serv_hero_title')}</h1>
+          <p>{t('serv_hero_desc')}</p>
         </div>
       </section>
 
@@ -20,8 +23,8 @@ const Servicos = () => {
               className="img-rounded"
               style={{ marginBottom: '20px' }}
             />
-            <h3>Eletrônica</h3>
-            <p>Projetos customizados de hardware para IoT, Edge AI e smart grids.</p>
+            <h3>{t('serv_card_el')}</h3>
+            <p>{t('serv_card_el_desc')}</p>
           </div>
           <div className="card animate-slide">
             <img 
@@ -30,8 +33,8 @@ const Servicos = () => {
               className="img-rounded"
               style={{ marginBottom: '20px' }}
             />
-            <h3>Software</h3>
-            <p>Plataformas robustas para visão computacional e inteligência artificial.</p>
+            <h3>{t('serv_card_sw')}</h3>
+            <p>{t('serv_card_sw_desc')}</p>
           </div>
           <div className="card animate-slide">
             <img 
@@ -40,35 +43,35 @@ const Servicos = () => {
               className="img-rounded"
               style={{ marginBottom: '20px' }}
             />
-            <h3>Parcerias</h3>
-            <p>Aplicações em HPC, robótica e sistemas para energia e óleo&gás.</p>
+            <h3>{t('serv_card_parc')}</h3>
+            <p>{t('serv_card_parc_desc')}</p>
           </div>
         </div>
       </section>
 
       <section className="section" style={{ backgroundColor: '#f8f9fa' }}>
         <div className="container">
-          <h2 className="section-title">Dúvidas Frequentes</h2>
+          <h2 className="section-title">{t('serv_faq_title')}</h2>
           <div className="faq-section">
             <div className="faq-item animate-slide">
-              <h6>Quais serviços oferecemos?</h6>
-              <p>Desenvolvemos eletrônica customizada e software para edge AI e IoT.</p>
+              <h6>{t('serv_faq_q1')}</h6>
+              <p>{t('serv_faq_a1')}</p>
             </div>
             <div className="faq-item animate-slide">
-              <h6>Com quem trabalhamos?</h6>
-              <p>Atendemos empresas dos setores elétrico, energia e óleo & gás, com parcerias acadêmicas.</p>
+              <h6>{t('serv_faq_q2')}</h6>
+              <p>{t('serv_faq_a2')}</p>
             </div>
             <div className="faq-item animate-slide">
-              <h6>Quais tecnologias utilizamos?</h6>
-              <p>Aplicamos IoT, edge AI, smart grid, HPC, robótica, visão computacional e IA em nossos projetos.</p>
+              <h6>{t('serv_faq_q3')}</h6>
+              <p>{t('serv_faq_a3')}</p>
             </div>
             <div className="faq-item animate-slide">
-              <h6>Como funciona a parceria acadêmica?</h6>
-              <p>Nossa equipe colabora com laboratórios da Coppe/UFRJ, UFF, USP e UERJ.</p>
+              <h6>{t('serv_faq_q4')}</h6>
+              <p>{t('serv_faq_a4')}</p>
             </div>
             <div className="faq-item animate-slide">
-              <h6>Qual o diferencial da SmartESCO?</h6>
-              <p>Unimos expertise em hardware e software para soluções sob medida e inovadoras.</p>
+              <h6>{t('serv_faq_q5')}</h6>
+              <p>{t('serv_faq_a5')}</p>
             </div>
           </div>
         </div>
