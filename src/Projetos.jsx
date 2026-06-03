@@ -390,8 +390,8 @@ const Projetos = () => {
   const { language, t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("Todos");
 
-  const filteredProjects = activeCategory === "Todos" 
-    ? projects 
+  const filteredProjects = activeCategory === "Todos"
+    ? projects
     : projects.filter(project => project.category === activeCategory);
 
   useEffect(() => {
@@ -447,9 +447,9 @@ const Projetos = () => {
                 <Link to={`/projetos/${project.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <article className="portfolio-box-item">
                     <div className="portfolio-box-thumbnail">
-                      <img 
-                        loading="lazy" 
-                        src={project.image} 
+                      <img
+                        loading="lazy"
+                        src={project.image}
                         alt={projectTitle}
                         className="portfolio-box-img"
                       />
@@ -468,7 +468,7 @@ const Projetos = () => {
         </div>
       </section>
 
-      <section className="section container cta-section-dark" style={{marginBottom: '20px'}}>
+      <section className="section container cta-section-dark" style={{ marginBottom: '20px' }}>
         <div className="cta-content">
           <h2>{t('proj_cta_title')}</h2>
           <p>{t('proj_cta_desc')}</p>
